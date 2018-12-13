@@ -74,7 +74,7 @@ resource "null_resource" "hello" {
 ```
 - Here the things start to get little tricky: 
    - if you run ``` terraform plan ```, you will see that there is a new resource to be created
-   - this however is not what we are aiming for, since we alread have that resource created
+   - this however is not what we are aiming for, since we already have that resource created
    - what you need to do is to move the state of the already created resource to be the state of the module you created
 
 - Move the state to the newly created module
@@ -88,7 +88,42 @@ terraform state mv random_pet.name module.random_pet
 ```
 terraform plan
 ```
+- Now we're going to add some code that will provide us with a remote backend to use
+- In this example I am using TFE as a backend
+- Update your main.tf to the following: 
+```
+# Here you define the remote backend which will be used
+terraform {
+backend "atlas" {
+name = "<your_organization_name/<your_workspace_name>"
+}
+}
 
+# Here is defined your module and its source
+module "random_pet" {
+  source = "modules/"
+}
+
+# This is your null resource, that will be used to check if everything works
+resource "null_resource" "hello" {
+  provisioner "local-exec" {
+    command = "echo Hello ${module.random_pet.random_pet_name_id}"
+  }
+}
+
+```
+- Initialize your configuration
+
+```
+terraform init
+```
+
+- Push your state file to the remote backend
+
+```
+terraform push terraform.tfstate
+
+```
 
 # How to use this repository 
 
