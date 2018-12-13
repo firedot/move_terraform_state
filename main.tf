@@ -1,3 +1,8 @@
+terraform {
+backend "atlas" {
+name = "HiveCorp/TF_STATE_Move"
+}
+}
 module "random_pet" {
   source = "modules/"
 }
