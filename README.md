@@ -4,8 +4,6 @@ Example code on how a terraform state could be moved from local to remote backen
 
 # TO-DO
 
-- Create a folder for random_pet
-- move the state
 - add a remote state backend to state push to TFE
 - Update code to reference the remote state
 - reference the state on random_pet
@@ -17,3 +15,5 @@ Example code on how a terraform state could be moved from local to remote backen
 # DONE
 
 - Create 1 folder for sample code, run terraform apply
+- Create a folder for random_pet
+- move the state
